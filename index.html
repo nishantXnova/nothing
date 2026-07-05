@@ -27,6 +27,7 @@
     align-items:center;
     padding: 30px 16px 60px;
     overflow-x:hidden;
+    position:relative;
   }
 
   body::before{
@@ -253,6 +254,36 @@
     text-align:center;
     line-height:1.5;
   }
+
+  /* MADE BY PORKBUNS – правый нижний угол */
+  .credit-label{
+    position: fixed;
+    bottom: 18px;
+    right: 24px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #4a4a4a;
+    letter-spacing: 2px;
+    background: rgba(0,0,0,0.65);
+    padding: 6px 16px;
+    border-radius: 30px;
+    border: 1px solid #2a2a2a;
+    box-shadow: 0 0 16px rgba(255,0,51,0.08);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    text-shadow: 0 0 6px rgba(255,0,51,0.15);
+    transition: 0.2s;
+  }
+  .credit-label:hover{
+    color: #b0b0b0;
+    border-color: #5a1a2a;
+    box-shadow: 0 0 30px rgba(255,0,51,0.15);
+  }
+  .credit-label::before{
+    content: "⚡ ";
+    color: #7a3a3a;
+  }
 </style>
 </head>
 <body>
@@ -298,7 +329,15 @@
     </div>
   </div>
 
- 
+  <div class="footer-note">
+    This is a fictional UI demo only. It does not perform any real lookup, does not connect to Instagram,
+    and the map location shown is a public landmark hardcoded for demonstration — not derived from any account
+    or any real person's data.
+  </div>
+
+  <!-- MADE BY PORKBUNS -->
+  <div class="credit-label">MADE BY PORKBUNS</div>
+
 <script>
   const btn = document.getElementById('scanBtn');
   const log = document.getElementById('consoleLog');
