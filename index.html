@@ -2,261 +2,342 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>GRAB-ZINSTA // prajwal.mandal7</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRAB-ZINSTA · ethical research</title>
 <style>
-  :root{
-    --red: #ff0033;
-    --red-dim: #7a0019;
-    --bg: #0a0a0c;
-    --green: #00ff66;
-    --grid: rgba(255,0,51,0.08);
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
 
-  *{ box-sizing:border-box; }
-
-  body{
-    margin:0;
-    min-height:100vh;
-    background:
-      repeating-linear-gradient(0deg, var(--grid) 0px, var(--grid) 1px, transparent 1px, transparent 3px),
-      radial-gradient(circle at 50% 0%, #1a0a0e 0%, var(--bg) 60%);
-    color: var(--red);
+  body {
+    background: #0a0a0c;
     font-family: 'Courier New', monospace;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    padding: 30px 16px 60px;
-    overflow-x:hidden;
-    position:relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
   }
 
-  body::before{
-    content:"";
-    position:fixed; inset:0;
-    background: repeating-linear-gradient(
-      to bottom,
-      rgba(255,255,255,0.02) 0px,
-      rgba(255,255,255,0.02) 1px,
-      transparent 2px,
-      transparent 4px
-    );
-    pointer-events:none;
-    z-index: 50;
+  /* глитч-фон */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      repeating-linear-gradient(0deg, rgba(255,0,51,0.04) 0px, rgba(255,0,51,0.04) 1px, transparent 1px, transparent 4px),
+      radial-gradient(circle at 50% 0%, #1a0a0e 0%, #0a0a0c 70%);
+    pointer-events: none;
+    z-index: 0;
   }
 
-  .header{
-    display:flex;
-    align-items:center;
-    gap:16px;
-    margin-bottom: 6px;
+  .scanline {
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(to bottom, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 2px, transparent 5px);
+    pointer-events: none;
+    z-index: 1;
   }
 
-  .logo-wrap img{
-    height:56px;
-    width:56px;
-    object-fit:cover;
-    border-radius:6px;
-    border:2px solid var(--red);
-    box-shadow: 0 0 12px var(--red), 0 0 40px rgba(255,0,51,0.4);
+  .landing {
+    position: relative;
+    z-index: 2;
+    max-width: 780px;
+    width: 100%;
+    background: rgba(16, 0, 4, 0.75);
+    border: 2px solid #5a1a2a;
+    border-radius: 18px;
+    padding: 44px 32px 38px;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 0 60px rgba(255,0,51,0.08), inset 0 0 80px rgba(255,0,51,0.03);
+    text-align: center;
+    transition: opacity 0.5s ease, transform 0.5s ease;
   }
 
-  .title{
-    font-size: 2.4rem;
-    font-weight:bold;
-    letter-spacing: 4px;
-    text-transform:uppercase;
-    position:relative;
+  .landing.hidden {
+    opacity: 0;
+    transform: scale(0.96);
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.96);
+    width: 100%;
+    max-width: 780px;
+  }
+
+  .glitch-title {
+    font-size: 3.2rem;
+    font-weight: 700;
+    letter-spacing: 6px;
+    text-transform: uppercase;
     color: #fff;
-    text-shadow: 0 0 8px var(--red);
+    text-shadow: 0 0 20px #ff0033, 0 0 60px rgba(255,0,51,0.3);
+    position: relative;
+    display: inline-block;
+    margin-bottom: 8px;
   }
-
-  .title::before, .title::after{
-    content:"GRAB-ZINSTA";
-    position:absolute; left:0; top:0;
-    width:100%; overflow:hidden;
-    color: var(--red);
+  .glitch-title::before,
+  .glitch-title::after {
+    content: "GRAB-ZINSTA";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    overflow: hidden;
+    color: #ff0033;
     background: transparent;
   }
-  .title::before{
-    left:2px; text-shadow:-2px 0 red;
-    animation: glitchTop 2.5s infinite linear alternate-reverse;
-    clip-path: polygon(0 0,100% 0,100% 45%,0 45%);
+  .glitch-title::before {
+    left: 3px;
+    text-shadow: -3px 0 red;
+    animation: glitchTop 2.8s infinite linear alternate-reverse;
+    clip-path: polygon(0 0, 100% 0, 100% 40%, 0 40%);
   }
-  .title::after{
-    left:-2px; text-shadow:-2px 0 #00fff9, 2px 2px red;
-    animation: glitchBot 2.2s infinite linear alternate-reverse;
-    clip-path: polygon(0 55%,100% 55%,100% 100%,0 100%);
+  .glitch-title::after {
+    left: -3px;
+    text-shadow: -3px 0 #00fff9, 3px 3px red;
+    animation: glitchBot 2.4s infinite linear alternate-reverse;
+    clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
   }
-  @keyframes glitchTop{
-    0%{ transform: translate(0,0);}
-    20%{ transform: translate(-3px,-1px);}
-    40%{ transform: translate(2px,1px);}
-    60%{ transform: translate(-2px,0);}
-    80%{ transform: translate(3px,-1px);}
-    100%{ transform: translate(0,0);}
+  @keyframes glitchTop {
+    0% { transform: translate(0,0); }
+    25% { transform: translate(-4px,-1px); }
+    50% { transform: translate(3px,1px); }
+    75% { transform: translate(-2px,0); }
+    100% { transform: translate(0,0); }
   }
-  @keyframes glitchBot{
-    0%{ transform: translate(0,0);}
-    20%{ transform: translate(3px,1px);}
-    40%{ transform: translate(-2px,-1px);}
-    60%{ transform: translate(2px,0);}
-    80%{ transform: translate(-3px,1px);}
-    100%{ transform: translate(0,0);}
+  @keyframes glitchBot {
+    0% { transform: translate(0,0); }
+    25% { transform: translate(4px,1px); }
+    50% { transform: translate(-3px,-1px); }
+    75% { transform: translate(2px,0); }
+    100% { transform: translate(0,0); }
   }
 
-  .panel{
-    width:100%;
+  .sub {
+    color: #7a7a7a;
+    font-size: 0.85rem;
+    letter-spacing: 4px;
+    margin-bottom: 28px;
+    border-bottom: 1px dashed #2a1a1a;
+    padding-bottom: 14px;
+    display: inline-block;
+  }
+
+  .disclaimer-box {
+    background: rgba(0,0,0,0.5);
+    border-left: 4px solid #ff0033;
+    border-right: 4px solid #ff0033;
+    border-radius: 6px;
+    padding: 22px 26px;
+    margin: 18px 0 28px;
+    text-align: left;
+    color: #b0a0a0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    box-shadow: inset 0 0 30px rgba(255,0,51,0.04);
+  }
+  .disclaimer-box strong {
+    color: #ff667a;
+    font-weight: 600;
+  }
+  .disclaimer-box .highlight {
+    color: #00ff66;
+    letter-spacing: 1px;
+  }
+
+  .btn-proceed {
+    background: linear-gradient(180deg, #b3001b, #4d000c);
+    border: 2px solid #ff0033;
+    color: #fff;
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    padding: 16px 40px;
+    border-radius: 60px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 30px rgba(255,0,51,0.15);
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+  }
+  .btn-proceed:hover {
+    box-shadow: 0 0 50px rgba(255,0,51,0.35);
+    transform: scale(1.02);
+    background: linear-gradient(180deg, #d40022, #5a000e);
+  }
+  .btn-proceed:active {
+    transform: scale(0.97);
+  }
+
+  .credit-footer {
+    margin-top: 30px;
+    color: #3a2a2a;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    border-top: 1px solid #1a1a1a;
+    padding-top: 18px;
+  }
+  .credit-footer span {
+    color: #5a4a4a;
+  }
+
+  /* основной UI (прячется до нажатия) */
+  .main-ui {
+    display: none;
+    width: 100%;
     max-width: 640px;
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 0.5s ease;
+  }
+  .main-ui.active {
+    display: block;
+  }
+
+  @keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  /* копия стилей из предыдущего UI */
+  .panel {
     background: rgba(20,0,4,0.55);
-    border: 1px solid var(--red-dim);
+    border: 1px solid #7a0019;
     border-radius: 10px;
     padding: 22px;
     box-shadow: 0 0 30px rgba(255,0,51,0.15), inset 0 0 40px rgba(255,0,51,0.06);
     backdrop-filter: blur(2px);
     margin-top: 10px;
   }
-
-  label.field-label{
-    display:block;
-    font-size:0.75rem;
-    letter-spacing:2px;
-    color: var(--green);
-    margin-bottom:6px;
-    text-transform:uppercase;
+  .field-label {
+    display: block;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    color: #00ff66;
+    margin-bottom: 6px;
+    text-transform: uppercase;
   }
-
-  input#username{
-    width:100%;
+  #username {
+    width: 100%;
     padding: 12px 14px;
-    background:#050506;
-    border: 1px solid var(--red);
-    color: var(--green);
+    background: #050506;
+    border: 1px solid #ff0033;
+    color: #00ff66;
     font-family: inherit;
     font-size: 1rem;
-    border-radius:4px;
-    outline:none;
+    border-radius: 4px;
+    outline: none;
   }
-  input#username:focus{
-    box-shadow: 0 0 10px var(--red);
+  #username:focus {
+    box-shadow: 0 0 10px #ff0033;
   }
-
-  button#scanBtn{
+  #scanBtn {
     margin-top: 16px;
-    width:100%;
+    width: 100%;
     padding: 13px;
     background: linear-gradient(180deg, #b3001b, #4d000c);
-    border: 1px solid var(--red);
+    border: 1px solid #ff0033;
     color: #fff;
     font-family: inherit;
-    font-weight:bold;
-    letter-spacing:3px;
-    text-transform:uppercase;
-    cursor:pointer;
-    border-radius:4px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
     transition: transform 0.1s, box-shadow 0.2s;
   }
-  button#scanBtn:hover{
-    box-shadow: 0 0 18px var(--red);
+  #scanBtn:hover {
+    box-shadow: 0 0 18px #ff0033;
     transform: translateY(-1px);
   }
-  button#scanBtn:active{ transform: translateY(1px); }
-
-  .console{
-    margin-top:16px;
-    font-size:0.8rem;
-    color: var(--green);
+  #scanBtn:active { transform: translateY(1px); }
+  .console {
+    margin-top: 16px;
+    font-size: 0.8rem;
+    color: #00ff66;
     min-height: 20px;
     white-space: pre-wrap;
   }
-
-  .result{
-    display:none;
+  .result {
+    display: none;
     margin-top: 22px;
-    border-top: 1px dashed var(--red-dim);
+    border-top: 1px dashed #7a0019;
     padding-top: 18px;
   }
-
-  .result.show{ display:block; }
-
-  .result-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:10px;
-    flex-wrap:wrap;
-    gap:6px;
+  .result.show { display: block; }
+  .result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 6px;
   }
-
-  .badge-demo{
-    font-size:0.65rem;
-    background:#000;
-    border:1px solid var(--red);
-    color: var(--red);
-    padding:2px 8px;
+  .badge-demo {
+    font-size: 0.65rem;
+    background: #000;
+    border: 1px solid #ff0033;
+    color: #ff0033;
+    padding: 2px 8px;
     border-radius: 3px;
-    letter-spacing:2px;
+    letter-spacing: 2px;
   }
-
-  .map-frame-wrap{
-    border: 1px solid var(--red);
+  .map-frame-wrap {
+    border: 1px solid #ff0033;
     border-radius: 6px;
-    overflow:hidden;
+    overflow: hidden;
     box-shadow: 0 0 20px rgba(255,0,51,0.25);
-    position:relative;
+    position: relative;
   }
-
-  .map-frame-wrap::after{
-    content:"LIVE GEOLOC";
-    position:absolute;
-    top:10px; left:10px;
+  .map-frame-wrap::after {
+    content: "LIVE GEOLOC";
+    position: absolute;
+    top: 10px; left: 10px;
     background: rgba(0,0,0,0.75);
-    color: var(--red);
-    font-size:0.65rem;
-    letter-spacing:2px;
-    padding:3px 8px;
-    border:1px solid var(--red);
-    border-radius:3px;
-    z-index:5;
-    pointer-events:none;
+    color: #ff0033;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    padding: 3px 8px;
+    border: 1px solid #ff0033;
+    border-radius: 3px;
+    z-index: 5;
+    pointer-events: none;
   }
-
-  iframe{
-    display:block;
-    width:100%;
+  iframe {
+    display: block;
+    width: 100%;
     height: 320px;
-    border:0;
+    border: 0;
     filter: grayscale(0.15) contrast(1.05);
   }
-
-  .meta-line{
-    margin-top:10px;
-    font-size:0.85rem;
-    color:#ffb3bd;
+  .meta-line {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: #ffb3bd;
   }
-  .meta-line span.tag{
-    color: var(--green);
+  .meta-line .tag {
+    color: #00ff66;
   }
-  .meta-line a{
+  .meta-line a {
     color: #00fff9;
     text-decoration: none;
     border-bottom: 1px dashed #00fff9;
   }
-  .meta-line a:hover{
+  .meta-line a:hover {
     color: #fff;
     border-bottom: 1px solid #fff;
   }
-
-  .footer-note{
-    margin-top: 26px;
-    font-size: 0.7rem;
-    color: #7a3742;
-    max-width: 640px;
-    text-align:center;
-    line-height:1.5;
-  }
-
-  /* MADE BY PORKBUNS – правый нижний угол */
-  .credit-label{
+  .credit-label {
     position: fixed;
     bottom: 18px;
     right: 24px;
@@ -275,12 +356,12 @@
     text-shadow: 0 0 6px rgba(255,0,51,0.15);
     transition: 0.2s;
   }
-  .credit-label:hover{
+  .credit-label:hover {
     color: #b0b0b0;
     border-color: #5a1a2a;
     box-shadow: 0 0 30px rgba(255,0,51,0.15);
   }
-  .credit-label::before{
+  .credit-label::before {
     content: "⚡ ";
     color: #7a3a3a;
   }
@@ -288,13 +369,26 @@
 </head>
 <body>
 
-  <div class="header">
-    <div class="logo-wrap">
-      <img src="https://i.ibb.co/LzBC1n3F/Chat-GPT-Image-Jul-5-2026-06-27-06-PM.png" alt="GRAB-ZINSTA logo">
-    </div>
-    <div class="title" data-text="GRAB-ZINSTA">GRAB-ZINSTA</div>
+<div class="scanline"></div>
+
+<!-- LANDING PAGE -->
+<div class="landing" id="landing">
+  <div class="glitch-title">GRAB-ZINSTA</div>
+  <div class="sub">// ethical research · v1.0</div>
+
+  <div class="disclaimer-box">
+    <strong>⚠ DISCLAIMER:</strong> This software is a dedicated <span class="highlight">ethical hacking tool</span> developed exclusively for authorized security research and penetration testing. It must <strong>not</strong> be utilized for malicious or unauthorized activities. Developed by <span class="highlight">Porkbuns</span> to advance the field of ethical cybersecurity.
   </div>
 
+  <button class="btn-proceed" id="enterBtn">▶ ACCEPT &amp; PROCEED</button>
+
+  <div class="credit-footer">
+    <span>🔐 porkbuns · 2026</span>
+  </div>
+</div>
+
+<!-- ОСНОВНОЙ UI (показывается после клика) -->
+<div class="main-ui" id="mainUi">
   <div class="panel">
     <label class="field-label">Target Instagram Handle</label>
     <input id="username" type="text" value="prajwal.mandal7" spellcheck="false">
@@ -328,16 +422,27 @@
       </div>
     </div>
   </div>
+</div>
 
-  <div class="footer-note">
-    Disclaimer: This software is a dedicated ethical hacking tool developed exclusively for authorized security research and penetration testing. It must not be utilized for malicious or unauthorized activities. Developed by Porkbuns to advance the field of ethical cybersecurity.
-  </div>
-
-  <!-- MADE BY PORKBUNS -->
-  <div class="credit-label">MADE BY PORKBUNS</div>
+<!-- MADE BY PORKBUNS -->
+<div class="credit-label">MADE BY PORKBUNS</div>
 
 <script>
-  const btn = document.getElementById('scanBtn');
+  const landing = document.getElementById('landing');
+  const mainUi = document.getElementById('mainUi');
+  const enterBtn = document.getElementById('enterBtn');
+
+  enterBtn.addEventListener('click', () => {
+    landing.classList.add('hidden');
+    mainUi.classList.add('active');
+    // небольшой скролл к UI
+    setTimeout(() => {
+      mainUi.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  });
+
+  // логика кнопки сканирования (копия из предыдущего)
+  const scanBtn = document.getElementById('scanBtn');
   const log = document.getElementById('consoleLog');
   const result = document.getElementById('resultBlock');
   const usernameInput = document.getElementById('username');
@@ -351,12 +456,12 @@
     "[+] trace complete."
   ];
 
-  btn.addEventListener('click', () => {
+  scanBtn.addEventListener('click', () => {
     result.classList.remove('show');
     log.textContent = '';
     let i = 0;
     const interval = setInterval(() => {
-      if (i < lines.length){
+      if (i < lines.length) {
         log.textContent += lines[i] + "\n";
         i++;
       } else {
